@@ -1,7 +1,12 @@
-﻿// Learn more about F# at http://fsharp.net
-// See the 'F# Tutorial' project for more help.
+﻿open Fraction
+
 
 [<EntryPoint>]
 let main argv = 
-    printfn "%A" argv
-    0 // return an integer exit code
+  let f1 = Frac(3,7)
+  let f2 = Frac(4,7)
+    
+  let res = f1 + f2
+
+  printfn "%s" <| res.ToString ()
+  0 // return an integer exit code
