@@ -17,6 +17,9 @@ type Frac(n: int,d: int) =
   static member inline (+) (f1: Frac, f2: Frac) = 
     Frac.reduce <| Frac(f1.n * f2.d + f2.n * f1.d, f1.d * f2.d) 
   
+  static member inline (-) (f1: Frac, f2: Frac) = 
+    Frac.reduce <| Frac(f1.n * f2.d - f2.n * f1.d, f1.d * f2.d) 
+  
   static member inline (+) (f1: Frac, i: int) = 
     Frac.reduce <| Frac(f1.n + i * f1.d, f1.d) 
   
@@ -40,7 +43,7 @@ type Frac(n: int,d: int) =
         | :? Frac as f2 -> 
             let th = x.n * f2.d
             let ot = x.d * f2.n
-            if th < ot then -1 elif th = ot then 0 else 0
+            if th < ot then -1 elif th = ot then 0 else 1
         | _ -> failwith "Illegal comparison" 
 
   override x.ToString () =
