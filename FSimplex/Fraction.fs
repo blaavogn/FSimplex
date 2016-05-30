@@ -11,8 +11,9 @@ type Frac(n: int,d: int) =
   member x.d = d 
   
   static member reduce (f: Frac) =
-    let gcd = GCD f.n f.d
-    Frac(f.n/gcd, f.d/gcd)
+    
+    //let gcd = if f.n = 0 then 1 else GCD f.n f.d
+    Frac(f.n/1, f.d/1)
   
   static member inline (+) (f1: Frac, f2: Frac) = 
     Frac.reduce <| Frac(f1.n * f2.d + f2.n * f1.d, f1.d * f2.d) 
@@ -48,6 +49,6 @@ type Frac(n: int,d: int) =
 
   override x.ToString () =
     if x.d = 1 then 
-      sprintf "  %d  " x.n  
+      sprintf "  %2d  " x.n  
     else
       sprintf " %d/%d " x.n x.d
