@@ -12,8 +12,10 @@ type Frac(n: int,d: int) =
   
   static member reduce (f: Frac) =
     
-    //let gcd = if f.n = 0 then 1 else GCD f.n f.d
-    Frac(f.n/1, f.d/1)
+    let gcd = if f.d < 2 || f.n < 2 then 1 else GCD f.n f.d
+    let n = f.n/gcd
+    let d = if (n = 0) then 1 else f.d/gcd  
+    Frac(n, d)
   
   static member inline (+) (f1: Frac, f2: Frac) = 
     Frac.reduce <| Frac(f1.n * f2.d + f2.n * f1.d, f1.d * f2.d) 
@@ -51,4 +53,4 @@ type Frac(n: int,d: int) =
     if x.d = 1 then 
       sprintf "  %2d  " x.n  
     else
-      sprintf " %d/%d " x.n x.d
+      sprintf " %2d/%d " x.n x.d

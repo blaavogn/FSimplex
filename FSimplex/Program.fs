@@ -13,16 +13,17 @@ let toTableau (d: Frac list list) =
   let augs = List.map (
                          fun l -> List.mapi (fun i _ -> if i = l then Frac(1,1) else Frac(0,1)) augZ
                        ) [0..slackVars-1]
-  let splice l aug =
-    snd <| List.fold (fun (i,ac) e -> if i = slackVars - 1 then (i+1,ac@aug@[e]) else (i+1,ac@[e])) (0,[]) l //adr
-  List.mapi2 (fun i l a -> (i + slackVars, splice l a)) d augs 
+  
+  let splice l aug point =
+    snd <| List.fold (fun (i,ac) e -> if i = point then (i+1,ac@aug@[e]) else (i+1,ac@[e])) (0,[]) l //adr
+  List.mapi2 (fun i (l: 'a list) a -> (i + l.Length, splice l a (l.Length - 1))) d augs 
 
 let rec pivot (dic: (int * Frac list) list) step = 
   let l = (snd (dic.Head)).Length
   let a = (snd <| dic.Item(dic.Length-1))
   let (ma,pc,_) = List.fold (fun (max,ind,i) e -> if e > max && i < l-2 then (e,i,i+1) else (max,ind,i+1)) (Frac(0,1),0,0) (snd <| dic.Item(dic.Length-1))
   if(ma.n = 0) then () else
-    printfn "Entering: %d" pc
+    printfn "Entering: %d" (pc+1)
     let (_,line,_) = 
       List.fold 
         (
@@ -35,7 +36,7 @@ let rec pivot (dic: (int * Frac list) list) step =
     printfn "Leaving: %d" (fst (dic.Item(line)))
     let oldLine = dic.Item(line)
     let rat = (snd oldLine).Item(pc)
-    let newLine = (pc, List.map (fun f -> f / rat) (snd oldLine)) 
+    let newLine = (pc + 1, List.map (fun f -> f / rat) (snd oldLine)) 
     let dic' = 
       List.mapi 
         (
@@ -54,13 +55,12 @@ let rec pivot (dic: (int * Frac list) list) step =
 let main argv = 
   let input =
      [
-       [Frac(1,1);Frac(2,1);Frac(1,1)];
-       [Frac(2,1);Frac(2,1);Frac(1,10)];
-       [Frac(0,1);Frac(2,1);Frac(0,1)]
+       [Frac(3,1);Frac(-1,1);Frac(2,1);Frac(-9,1);Frac(5,1);Frac(1,1)];
+       [Frac(1,1);Frac(1,1);Frac(-7,1);Frac(4,1);Frac(-2,1);Frac(2,1)];
+       [Frac(1,1);Frac(-1,1);Frac(-6,1);Frac(-6,1);Frac(-6,1);Frac(0,1)];
      ]
   
   let tab = toTableau input
- // printDic input
   printfn ""
   printDic tab
   printfn ""
