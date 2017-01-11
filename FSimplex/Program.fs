@@ -2,6 +2,8 @@
 
 type Rest = int * int list
 
+let f(a) = Frac(a,1)
+
 let printDic dic = 
   List.iter 
     (fun a -> printf "%d:" (fst a); List.iter (fun e -> printf "%A" e) (snd a); printf "\n")
@@ -55,9 +57,10 @@ let rec pivot (dic: (int * Frac list) list) step =
 let main argv = 
   let input =
      [
-       [Frac(3,1);Frac(-1,1);Frac(2,1);Frac(-9,1);Frac(5,1);Frac(1,1)];
-       [Frac(1,1);Frac(1,1);Frac(-7,1);Frac(4,1);Frac(-2,1);Frac(2,1)];
-       [Frac(1,1);Frac(-1,1);Frac(-6,1);Frac(-6,1);Frac(-6,1);Frac(0,1)];
+       [f 1;f  1;f -1;f 8];
+       [f 1;f -1;f  0;f 6];
+       [f 0;f  0;f  1;f 100];
+       [f 100;f  60;f  -30;f 0];
      ]
   
   let tab = toTableau input

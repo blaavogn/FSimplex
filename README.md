@@ -1,5 +1,7 @@
 # FSimplex
 
+This branch is for learning branches
+
 This is a really simple an inefficient simplex solver I made for an exam. 
 Mostly because I was tired of ending up with the wrong result because of some wrong fraction multiplication,
 and I couldn't find a step-by-step solver that I trusted.
